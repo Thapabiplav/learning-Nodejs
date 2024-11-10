@@ -27,4 +27,4 @@ exports.renderSingleQuestionPage = async (req, res) => {
   });
 
   res.render("questions/singleQuestion", { data, answers:answerData });
-};
+}
