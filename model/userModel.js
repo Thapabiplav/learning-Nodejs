@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       otp:{
         type:DataTypes.INTEGER
+      },
+      orpGeneratedTime:{
+        type:DataTypes.STRING
       }
 
     
