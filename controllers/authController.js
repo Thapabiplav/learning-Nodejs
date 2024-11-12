@@ -136,5 +136,36 @@ exports.handleLogin = async (req,res)=>{
  }
 
  exports.handleResetPassword=(req,res)=>{
-    
+    const {email,otp}=req.params
+    const {newPassword,confirmPassword}=req.body
+    if(!email || !otp || !newPassword || !confirmPassword){
+        return res.send("please provide email, otp, newPassword, confirmPassword")
+    }
+ }
+
+ if(newPassword !==confirmPassword){
+    return res.send('New password mus match confirm password')
+ }
+
+ const userData=await users.findAll({
+    where:{
+        email,
+        otp
+    }
+ })
+
+ const currentTime= Date.now()
+ const otpGeneratedTime=data[0].otpGeneratedTime
+ if(currentTime -otpGeneratedTime <=120000){
+    await users.update ({
+        password:bcrypt.hashSync(newPassword,8)
+    },{
+        where:{
+            email:email
+        }
+    })
+    res.redirect('/login')
+ }
+ else{
+    res.send('otpExpired')
  }

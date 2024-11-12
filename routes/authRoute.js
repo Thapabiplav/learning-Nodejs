@@ -1,4 +1,4 @@
-const { handleRegister, renderRegisterPage, renderLoginPage, handleLogin, renderForgetPassword, handleForgetPassword, renderVerifyOtpPage, handleVerifyOtp, renderResetPassword } = require("../controllers/authController")
+const { handleRegister, renderRegisterPage, renderLoginPage, handleLogin, renderForgetPassword, handleForgetPassword, renderVerifyOtpPage, handleVerifyOtp, renderResetPassword, handleResetPassword } = require("../controllers/authController")
 
 const router = require("express").Router()
 
@@ -9,6 +9,6 @@ router.route('/forgotPassword').get(renderForgetPassword).post(handleForgetPassw
 router.route('/verifyOtp').get(renderVerifyOtpPage)
 router.route('/verifyOtp/:id').post(handleVerifyOtp)
 router.route('/resetPassword').get(renderResetPassword)
-router.route('/resetPassword/:email/:otp').post()
+router.route('/resetPassword/:email/:otp').post(handleResetPassword)
 
 module.exports = router 
