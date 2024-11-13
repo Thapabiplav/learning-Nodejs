@@ -6,17 +6,29 @@ const jwt = require("jsonwebtoken");
 
 const { renderHomePage } = require("./controllers/authController");
 const cookieParser = require("cookie-parser");
+const session=require('express-session')
+const flash=require('connect-flash')
 
 require("./model/index");
 // const app = require("express")()
 const authRoute = require("./routes/authRoute");
 const questionRoute = require("./routes/questionRoute");
-const answerRoute=require('./routes/answerRoute')
+const answerRoute=require('./routes/answerRoute');
+const catchError = require("./util/catchError");
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(flash())
+
+app.use(session({
+  secret:"thisissecretforsession",
+  resave:false,
+  saveUninitialized:false
+}))
+
+
 
 app.use(async (req, res, next) => {
   const token = req.cookies.jwtToken;
@@ -33,7 +45,7 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.get("/", renderHomePage);
+app.get("/", catchError(renderHomePage));
 
 app.use("/", authRoute);
 app.use("/", questionRoute);
