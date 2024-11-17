@@ -55,6 +55,7 @@
                     <p> <%- answer.answerText %></p>
                     <i> Author:<%-answer.user.username %> </i> <br>
                     <i> Posted on: <%-new Date(answer.createdAt).toLocaleDateString()%></i>
+                    <button onclick="likePost(<%= answer.id %> )">Like</button> <span id="likes_<%-answer.id%>"></span>
                 </div>
                 <%})%>
             </div>
@@ -62,11 +63,24 @@
             <div class="answersection">
                 <form action="/answer/<%-data[0].id %>" method="post">
                     <textarea name="answer" id="" cols="100" rows="10"></textarea>
-                    <button>Submit</button>
+                  <button> Submit</button>
                 </form>
             </div>
-       
-
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket=io()
+        const cookie=document.cookie.split('=')
+        function likePost(answerId){
+            socket.emit('like',{
+            answerId,
+            cookie:cookie[1]
+                })
+        }
+        socket.on('likeUpdate',({likesCount,answerId})=>{
+            const likes=document.getElementById(`likes_${answerId}`)
+            likes.textContent=likesCount
+        })
+    </script>
 </body>
 </html>
