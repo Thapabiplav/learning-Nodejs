@@ -90,7 +90,17 @@ io.on("connection", (socket) => {
       const likes = await sequelize.query(`SELECT * FROM likes_${answerId}`, {
         type: QueryTypes.SELECT,
       });
+
+     
       const likesCount = likes.length;
+      await answers.update({
+        likes:likesCount
+      },{
+        where:{
+          id:answerId
+        }
+      })
+
       socket.emit("likeUpdate", { likesCount, answerId });
     }
   });

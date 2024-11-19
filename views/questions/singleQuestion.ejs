@@ -55,7 +55,8 @@
                     <p> <%- answer.answerText %></p>
                     <i> Author:<%-answer.user.username %> </i> <br>
                     <i> Posted on: <%-new Date(answer.createdAt).toLocaleDateString()%></i>
-                    <button onclick="likePost(<%= answer.id %> )">Like</button> <span id="likes_<%-answer.id%>"></span>
+                    <button onclick="likePost(<%= answer.id %> )">Like</button> 
+                    <span id="likes_<%-answer.id%>"><%-answer.likes%></span>
                 </div>
                 <%})%>
             </div>
