@@ -8,6 +8,7 @@ const {
 const { isAuthenticated } = require("../middleware/isAuthenticated");
 
 const router = require("express").Router();
+
 const { multer, storage } = require("../middleware/multerConfig");
 const upload = multer({ storage: storage });
 

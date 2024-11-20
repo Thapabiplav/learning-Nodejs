@@ -1,5 +1,5 @@
 const { questions, users } = require("../model")
-
+const {cloudinary}=require('../cloudinary/index')
 exports.renderAskQuestionPage = (req,res)=>{
     res.render("questions/askQuestion")
 }
@@ -7,17 +7,18 @@ exports.renderAskQuestionPage = (req,res)=>{
 exports.askQuestion = async (req,res)=>{
 
     const {title,description}  = req.body 
-    console.log(req.body)
-    console.log(req.file)
+    // console.log(req.body)
+    // console.log(req.file)
     const userId = req.userId 
     const fileName = req.file.filename
+      const result=await cloudinary.v2.uploader.upload(req.file.path)
     if(!title || !description ){
         return res.send("Please provide title, description")
     }
     await questions.create({
         title, 
         description, 
-        image : fileName,
+        image : result.url,
         userId
     })
     res.redirect("/")

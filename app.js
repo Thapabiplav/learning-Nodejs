@@ -4,6 +4,7 @@ const app = express();
 const socketio = require("socket.io");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
+require('dotenv').config()
 
 const { renderHomePage } = require("./controllers/authController");
 const cookieParser = require("cookie-parser");
